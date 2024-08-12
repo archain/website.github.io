@@ -20,15 +20,28 @@
     <button id="btnKeyDown">测试按键</button>
     <button id="btnRetry">测试重试</button>
     <button id="btnFailed">测试失败</button>
-    <button id="btnExit">测试退出</button>
     <script>
 	  setTimeout(()=>{
 		window.u3dTypingGame.onEnter();
 		u3dlog(JSON.stringify(window.u3dTypingGame.getGameData()));
 	  }, 1000);
 	  
+	  function testparam(num) {
+		  if (typeof(num) != 'undefined') {
+			console.log("XXX");
+		  }
+		  else {
+			console.log("YYY");
+			num = 2;
+		  }
+		  console.log("num"+num);
+		  console.log("num json=>"+JSON.stringify(num));
+	  }
+	  
       const btn = document.querySelector('#btnVibrate1');
       btn.addEventListener('click', () => {
+	      testparam();
+		  testparam(1);
 		  u3dlog("vibrate 1");
 		  window.u3dTypingGame.vibrate(0);
       });
@@ -106,12 +119,6 @@
 		window.u3dTypingGame.onFailed();
       });
 	  
-	  const btn11 = document.querySelector('#btnExit');
-      btn11.addEventListener('click', () => {
-        u3dlog("btnExit");
-		window.ccTypingGame.onExit();
-      });
-	  
 	  window.ccTypingGame = {};
 	  window.ccTypingGame.pause = function() {
 			u3dlog("pause in js");
@@ -124,6 +131,7 @@
 	  };
 	  window.ccTypingGame.exit = function() {
 			u3dlog("exit in js");
+			window.ccTypingGame.onExit();
 	  };
     </script>
   </body>
