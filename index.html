@@ -6,18 +6,21 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0"
     />
-    <title>测试js调用</title>
+    <title>测试调用</title>
   </head>
   <body>
     <br><br><br>
     <button id="btnVibrate1">测试震动1</button><br>
     <button id="btnVibrate2">测试震动2</button><br>
     <button id="btnVibrate3">测试震动3</button><br>
-    <button id="btnEnter">测试进入</button><br>
     <button id="btnSuccess">测试通关</button><br>
     <button id="btnNextNode">测试下一个节点</button>
     <button id="btnMenu">测试选关</button>
     <button id="btnPause">测试暂停</button>
+    <button id="btnKeyDown">测试按键</button>
+    <button id="btnRetry">测试重试</button>
+    <button id="btnFailed">测试失败</button>
+    <button id="btnExit">测试退出</button>
     <script>
 	  setTimeout(()=>{
 		window.u3dTypingGame.onEnter();
@@ -69,13 +72,6 @@
         window.u3dTypingGame.goToNextNode();
       });
 	  
-	  const btn5 = document.querySelector('#btnEnter');
-      btn5.addEventListener('click', () => {
-        u3dlog("btnEnter");
-		window.u3dTypingGame.onEnter({
-		});
-      });
-	  
 	  const btn6 = document.querySelector('#btnMenu');
       btn6.addEventListener('click', () => {
         u3dlog("btnMenu");
@@ -86,6 +82,34 @@
       btn7.addEventListener('click', () => {
         u3dlog("btnPause");
 		window.ccTypingGame.pause();
+      });
+	  
+	  const btn8 = document.querySelector('#btnKeyDown');
+      btn8.addEventListener('click', () => {
+        u3dlog("btnKeyDown");
+		window.u3dTypingGame.onKeyDown({
+		    targetLetter: "abcdefg",
+			inputKey: "c",
+			isCorrect: false
+		});
+      });
+	  
+	  const btn9 = document.querySelector('#btnRetry');
+      btn9.addEventListener('click', () => {
+        u3dlog("btnRetry");
+		window.u3dTypingGame.onRetry();
+      });
+	  
+	  const btn10 = document.querySelector('#btnFailed');
+      btn10.addEventListener('click', () => {
+        u3dlog("btnFailed");
+		window.u3dTypingGame.onFailed();
+      });
+	  
+	  const btn11 = document.querySelector('#btnExit');
+      btn11.addEventListener('click', () => {
+        u3dlog("btnExit");
+		window.ccTypingGame.onExit();
       });
 	  
 	  window.ccTypingGame = {};
