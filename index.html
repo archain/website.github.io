@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>测试js调用</title>
+  </head>
+  <body>
+    <br><br><br>
+    <button id="btnVibrate1">测试震动1</button><br>
+    <button id="btnVibrate2">测试震动2</button><br>
+    <button id="btnVibrate3">测试震动3</button><br>
+    <button id="btnEnter">测试进入</button><br>
+    <button id="btnSuccess">测试通关</button><br>
+    <button id="btnNextNode">测试下一个节点</button>
+    <button id="btnMenu">测试选关</button>
+    <button id="btnPause">测试暂停</button>
+    <script>
+	  setTimeout(()=>{
+		window.u3dTypingGame.onEnter();
+		u3dlog(JSON.stringify(window.u3dTypingGame.getGameData()));
+	  }, 1000);
+	  
+      const btn = document.querySelector('#btnVibrate1');
+      btn.addEventListener('click', () => {
+		  u3dlog("vibrate 1");
+		  window.u3dTypingGame.vibrate(1000);
+      });
+	  
+	  const btn2 = document.querySelector('#btnVibrate2');
+      btn2.addEventListener('click', () => {
+        u3dlog("vibrate 2");
+		window.u3dTypingGame.vibrate(200);
+      });
+	  
+	  const btn2a = document.querySelector('#btnVibrate3');
+      btn2a.addEventListener('click', () => {
+        u3dlog("vibrate 2");
+		window.u3dTypingGame.vibrate();
+      });
+	  
+	  const btn3 = document.querySelector('#btnSuccess');
+      btn3.addEventListener('click', () => {
+        u3dlog("success");
+		window.u3dTypingGame.onSucceeded({
+		    isEnd: true,
+			isSuccess: true,
+			retryTimes: 0,
+			stars: 3,
+			lives: 1,
+			correctItemCount: 5,
+			correctLetterCount: 5,
+			correctRate: 100,
+			roundDuration: 30,
+			gameDuration: 100,
+			speed: 30,
+			errors: {
+			    "a": 1,
+				"e": 2
+			}
+		});
+      });
+	  
+	  const btn4 = document.querySelector('#btnNextNode');
+      btn4.addEventListener('click', () => {
+        window.u3dTypingGame.goToNextNode();
+      });
+	  
+	  const btn5 = document.querySelector('#btnEnter');
+      btn5.addEventListener('click', () => {
+        u3dlog("btnEnter");
+		window.u3dTypingGame.onEnter({
+		});
+      });
+	  
+	  const btn6 = document.querySelector('#btnMenu');
+      btn6.addEventListener('click', () => {
+        u3dlog("btnMenu");
+		window.u3dTypingGame.onClickSelectLevelButton();
+      });
+	  
+	  const btn7 = document.querySelector('#btnPause');
+      btn7.addEventListener('click', () => {
+        u3dlog("btnPause");
+		window.ccTypingGame.pause();
+      });
+	  
+	  window.ccTypingGame = {};
+	  window.ccTypingGame.pause = function() {
+			u3dlog("pause in js");
+			window.u3dTypingGame.onPause({
+				correctItemCount: 0
+			});
+	  };
+	  window.ccTypingGame.resume = function() {
+			u3dlog("resume in js");
+	  };
+	  window.ccTypingGame.exit = function() {
+			u3dlog("exit in js");
+	  };
+    </script>
+  </body>
+</html>
