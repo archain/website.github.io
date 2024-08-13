@@ -23,6 +23,8 @@
     <script>
 	  setTimeout(()=>{
 		window.u3dTypingGame.onEnter();
+		var gameData = window.u3dTypingGame.getGameData();
+		u3dlog("config title="+gameData.config.title);
 		u3dlog(JSON.stringify(window.u3dTypingGame.getGameData()));
 	  }, 1000);
 	  
