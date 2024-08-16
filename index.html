@@ -64,6 +64,14 @@
         u3dlog("vibrate 2");
 		window.u3dTypingGame.vibrate();
       });
+
+	    const btn2c = document.querySelector('#btnTTT');
+      btn2c.addEventListener('click', () => {
+        for (var i = 0; i < 400; ++i) {
+        	console.log("vibrate " + i);
+		window.u3dTypingGame.onKeyDown("abcdefg", "c", false);
+	}
+      });
 	  
 	  const btn3 = document.querySelector('#btnSuccess');
       btn3.addEventListener('click', () => {
