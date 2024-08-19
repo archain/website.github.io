@@ -53,6 +53,7 @@
 <script src="main.js" charset="utf-8"></script>
 <script>
 function CanvasToImage(canvas) {
+  cc.log("CanvasToImage is called from js");
   var newCanvas = document.createElement('canvas');
   var ctx = newCanvas.getContext('2d');
 
