@@ -56,13 +56,60 @@
 
 var canvasDom = document.querySelector("#GameCanvas");
 var canvasImage = document.querySelector(".canvas_image");
+function captureScreen() {
+	let node = new cc.Node();
+	node.parent = cc.director.getScene();
+	node.width = window.getRealWinSize().width;
+	node.height = window.getRealWinSize().height;
+	node.x = node.width/ 2;
+	node.y = node.height / 2;
+	let camera = node.addComponent(cc.Camera);
+	node.zIndex = 1000000000;
+	camera.cullingMask = 1000000001;
+	let texture = new cc.RenderTexture();
+	let gl = cc.game._renderContext;
+	texture.initWithSize(node.width, node.height, gl.STENCIL_INDEX8);
+	node.parent.scaleY = -1;
+	camera.targetTexture = texture;
+	node.parent.scaleY = 1;
+	let canvas = null;
+	if (!canvas) {
+		canvas = document.createElement('canvas');
+		canvas.width = texture.width;
+		canvas.height = texture.height;
+	}
+	else {
+		let ctx = canvas.getContext('2d');
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+	}
+	let ctx = canvas.getContext('2d');
+	camera.render();
+	let data = texture.readPixels();
+	let width = texture.width;
+	let height = texture.height;
+	let rowBytes = width * 4;
+	for (let row = 0; row < height; row++) {
+		let srow = height - 1 - row;
+		let imageData = ctx.createImageData(width, 1);
+		let start = srow * width * 4;
+		for (let i = 0; i < rowBytes; i++) {
+			imageData.data[i] = data[start + i];
+		}
+		ctx.putImageData(imageData, 0, row);
+	}
+	
+	node.parent = null;
+	node.destroy();
+	return canvas.toDataURL("image/png");
+}
+
 function CanvasToImage() {
-  cc.log("CanvasToImage is called from js 3");
-  var newCanvas = document.createElement('canvas');
+  cc.log("CanvasToImage is called from js 5");
+  /*var newCanvas = document.createElement('canvas');
   var ctx = newCanvas.getContext('2d');
 
-  var width = canvasDom.width;
-  var height = canvasDom.height;
+  var width = canvas.width;
+  var height = canvas.height;
 
   newCanvas.width = width;
   newCanvas.height = height;
@@ -70,7 +117,8 @@ function CanvasToImage() {
   ctx.beginPath();
   ctx.drawImage(canvasDom, 0, 0, width, height);
 
-  var src = newCanvas.toDataURL('image/png');
+  var src = newCanvas.toDataURL('image/png');*/
+  var src = captureScreen();
 
   canvasDom.style.display = 'none';
 
