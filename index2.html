@@ -59,8 +59,8 @@ var canvasImage = document.querySelector(".canvas_image");
 function captureScreen() {
 	let node = new cc.Node();
 	node.parent = cc.director.getScene();
-	node.width = window.getRealWinSize().width;
-	node.height = window.getRealWinSize().height;
+	node.width = cc.visibleRect.width;
+	node.height =cc.visibleRect.height;
 	node.x = node.width/ 2;
 	node.y = node.height / 2;
 	let camera = node.addComponent(cc.Camera);
