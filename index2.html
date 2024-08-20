@@ -42,6 +42,7 @@
 </head>
 <body>
   <canvas id="GameCanvas" oncontextmenu="event.preventDefault()" tabindex="0"></canvas>
+  <img class="canvas_image" style="display: none; z-index: -1; object-fit: contain;" />
   <div id="splash">
     <div class="progress-bar stripes">
       <span style="width: 0%"></span>
@@ -52,7 +53,10 @@
 <script src="vconsole.min.js"></script>
 <script src="main.js" charset="utf-8"></script>
 <script>
-function CanvasToImage(canvas) {
+
+var canvasDom = document.querySelector("#GameCanvas");
+var canvasImage = document.querySelector(".canvas_image");
+function CanvasToImage() {
   cc.log("CanvasToImage is called from js");
   var newCanvas = document.createElement('canvas');
   var ctx = newCanvas.getContext('2d');
@@ -64,9 +68,24 @@ function CanvasToImage(canvas) {
   newCanvas.height = height;
 
   ctx.beginPath();
-  ctx.drawImage(canvas, 0, 0, width, height);
+  ctx.drawImage(canvasDom, 0, 0, width, height);
 
-  return newCanvas.toDataURL('image/png');
+  var src = newCanvas.toDataURL('image/png');
+
+  canvasDom.style.display = 'none';
+
+  canvasImage.style.display = 'block';
+  canvasImage.style.zIndex = 99;
+  canvasImage.src = src;
+
+}
+function CanvasRestore() {
+  canvasImage.style.display = 'none';
+  canvasImage.style.zIndex = -1;
+  canvasImage.src = '';
+
+  canvasDom.style.display = 'block';
+
 }
 </script>
 
