@@ -54,8 +54,6 @@
 <script src="main.js" charset="utf-8"></script>
 <script>
 
-var canvasDom = document.querySelector("#GameCanvas");
-var canvasImage = document.querySelector(".canvas_image");
 function captureScreen() {
 	let node = new cc.Node();
 	node.parent = cc.director.getScene();
@@ -105,6 +103,8 @@ function captureScreen() {
 
 function CanvasToImage() {
   cc.log("CanvasToImage is called from js 5");
+	var canvasDom = document.querySelector("#GameCanvas");
+var canvasImage = document.querySelector(".canvas_image");
   /*var newCanvas = document.createElement('canvas');
   var ctx = newCanvas.getContext('2d');
 
@@ -128,6 +128,8 @@ function CanvasToImage() {
 
 }
 function CanvasRestore() {
+	var canvasDom = document.querySelector("#GameCanvas");
+var canvasImage = document.querySelector(".canvas_image");
   canvasImage.style.display = 'none';
   canvasImage.style.zIndex = -1;
   canvasImage.src = '';
