@@ -55,13 +55,13 @@
 <script>
 
 	console.log("XX1");
-	window.onkeydown=function() {
-		console.log(window.event.keyCode);
-		event.returnValue=false;
+	window.onkeydown=function(e) {
+		console.log("xxx"+e);
+		e.preventDefault();
 	}
-	window.onkeyup=function() {
-		console.log(window.event.keyCode);
-		event.returnValue=false;
+	window.onkeyup=function(e) {
+		console.log("xxx2"+e);
+		e.preventDefault();
 	}
 
 function testit() {
