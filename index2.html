@@ -54,10 +54,15 @@
 <script src="main.js" charset="utf-8"></script>
 <script>
 
-	document.on('keyup keypress', function (e) {
-		window.u3dTypingGame.log("From js");
-           e.preventDefault(); return false;
-});
+	console.log("XX1");
+	window.onkeydown=function() {
+		console.log(window.event.keyCode);
+		event.returnValue=false;
+	}
+	window.onkeyup=function() {
+		console.log(window.event.keyCode);
+		event.returnValue=false;
+	}
 
 function testit() {
 	window.u3dTypingGame.log("TestIt is called");
