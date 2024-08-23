@@ -54,6 +54,15 @@
 <script src="main.js" charset="utf-8"></script>
 <script>
 
+cc.log("JJJJ");
+	$(document).ready(function () {
+		window.u3dTypingGame.log("From js");
+    $(document).bind("keypress", function (e) {
+        // Prevent any key
+        return false;
+    });
+});
+
 function testit() {
 	window.u3dTypingGame.log("TestIt is called");
 }
