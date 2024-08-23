@@ -54,15 +54,8 @@
 <script src="main.js" charset="utf-8"></script>
 <script>
 
-	console.log("XX2");
-	window.onkeydown=function(e) {
-		console.log("xxx"+e);
-		e.preventDefault();
-	}
-	window.onkeyup=function(e) {
-		console.log("xxx2"+e);
-		e.preventDefault();
-	}
+	console.log("XX3");
+	
 
 function testit() {
 	window.u3dTypingGame.log("TestIt is called");
@@ -155,6 +148,18 @@ var canvasImage = document.querySelector(".canvas_image");
 
 <script type="text/javascript">
 (function () {
+	window.onkeydown=function(e) {
+		console.log("xxx"+e);
+		e.preventDefault();
+	}
+	window.onkeyup=function(e) {
+		console.log("xxx2"+e);
+		e.preventDefault();
+	}
+	document.onkeydown = function(e) {
+  console.log("document catched the keydown event");
+
+};
     // open web debugger console
     if (typeof VConsole !== 'undefined') {
         window.vConsole = new VConsole();
