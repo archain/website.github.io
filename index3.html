@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>调起自测</title>
+  </head>
+  <body>
+    <a href='uscratchcoding://some-page.html?preparingCourseInfo={"apienv":"test_0","tenantId":3,"userId":100000030007105,"subjectId":17,"classId":-1,"templateId":-1,"courseId":-1,"chapterId":5000018,"unitInfo":{"zipUrl":"https://cdn.console.pipacoding.com/einstein/material/d8c69a98-257f-40ab-95a5-a93a9cda3f80.zip","zipMd5":"0fbc6121e23b165cd717926d96cb7e05","arrangementId":8067,"unitId":121625,"normalZipList":[{"type":"Windows","path":"https://cdn.console.pipacoding.com/einstein/material/bc70d1fc-6963-4480-a3d8-9553014cedbc/"},{"type":"iOS","path":"https://cdn.console.pipacoding.com/einstein/material/17a269ba-c8a2-4cb4-93b9-cb27093f5634/"},{"type":"Mac","path":"https://cdn.console.pipacoding.com/einstein/material/ca783582-f582-49e8-9a2a-5ae5cb854bef/"},{"type":"Android","path":"https://cdn.console.pipacoding.com/einstein/material/acb1da56-87d3-462c-865f-c131432ca0df/"}]},"ccid":1,"direction":-1,"levelSeq":-1,"levelId":-1,"unitId":121625,"unitVersion":0,"unitSeq":-1,"teacherId":30007105,"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTM5NTEwNzQsImlkIjoxMDAwMDAwMzAwMDcxMDV9.yKlE5iPEjY2Jp4CdqdUFW_pcR_qUtuCD8MmFtuglAjI","unitName":"测试123","unitType":0,"unitContentType":"SOFT_PROJECT","openTime":-1,"chapterName":"模块1:角色运动","chapterType":"LEARNING_LINK","objectId":121625,"objectType":"teachingUnit","env":"testing","sourceId":121625,"parentIds":[0],"nodeId":158284,"nodePath":[158283,158284,158285,158286,158287,158288,158289,158290,158292,158293,158294,158295,158296,158300,158301,158302,158303,158304,158305,158306,158307,158308,158309,158310,158314,158315,158319],"nodeList":[158300,158310]}'
+      >点我调起U3D</a
+    >
+    <br />
+    <button id="btn">通过按钮方式调起</button>
+	<script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
+<script>
+  // VConsole 默认会挂载到 `window.VConsole` 上
+  var vConsole = new window.VConsole();
+</script>
+    <script>
+      const btn = document.querySelector('#btn');
+      btn.addEventListener('click', () => {
+        window.open('uscratchcoding://some-page.html?preparingCourseInfo={"userId":30186884,"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDA4MTE0MzEsImlkIjozMDE4Njg4NH0._DLaxdLdx4L2NGvvG7adJDLo9DNlGZqQK7mQiro7fJo","unitId":117103,"levelId":5818,"subjectId":17,"classId":44727,"templateId":2433,"chapterId":5000278,"nodeId":121657,"ccid":10,"courseId":6467,"tenantId":1,"levelSeq":7,"unitSeq":2,"unitContentType":"STAGE","openTime":1686815872000}')
+      });
+	  window.onkeydown = function(e) {
+	      console.log("key down: " + e.keyCode);
+	  }
+	  window.onkeyup = function(e) {
+	      console.log("key up: " + e.keyCode);
+	  }
+    </script>
+
+  </body>
+</html>
