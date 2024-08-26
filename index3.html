@@ -24,10 +24,10 @@
       btn.addEventListener('click', () => {
         window.open('uscratchcoding://some-page.html?preparingCourseInfo={"userId":30186884,"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDA4MTE0MzEsImlkIjozMDE4Njg4NH0._DLaxdLdx4L2NGvvG7adJDLo9DNlGZqQK7mQiro7fJo","unitId":117103,"levelId":5818,"subjectId":17,"classId":44727,"templateId":2433,"chapterId":5000278,"nodeId":121657,"ccid":10,"courseId":6467,"tenantId":1,"levelSeq":7,"unitSeq":2,"unitContentType":"STAGE","openTime":1686815872000}')
       });
-	  window.onkeydown = function(e) {
+	  window.addEventListener("keydown", function(e) {
 	      console.log("key down: " + e.keyCode);
 	  }
-	  window.onkeyup = function(e) {
+	  window.addEventListener("keyup", function(e) {
 	      console.log("key up: " + e.keyCode);
 	  }
     </script>
