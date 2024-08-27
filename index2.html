@@ -1,196 +1,154 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-
-  <title>Cocos Creator | typing-game</title>
-
-  <!--http://www.html5rocks.com/en/mobile/mobifying/-->
-  <meta name="viewport"
-        content="width=device-width,user-scalable=no,initial-scale=1, minimum-scale=1,maximum-scale=1"/>
-
-  <!--https://developer.apple.com/library/safari/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html-->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="format-detection" content="telephone=no">
-
-  <!-- force webkit on 360 -->
-  <meta name="renderer" content="webkit"/>
-  <meta name="force-rendering" content="webkit"/>
-  <!-- force edge on IE -->
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-  <meta name="msapplication-tap-highlight" content="no">
-
-  <!-- force full screen on some browser -->
-  <meta name="full-screen" content="yes"/>
-  <meta name="x5-fullscreen" content="true"/>
-  <meta name="360-fullscreen" content="true"/>
-  
-  <!-- force screen orientation on some browser -->
-  <meta name="screen-orientation" content="landscape"/>
-  <meta name="x5-orientation" content="landscape">
-
-  <!--fix fireball/issues/3568 -->
-  <!--<meta name="browsermode" content="application">-->
-  <meta name="x5-page-mode" content="app">
-
-  <!--<link rel="apple-touch-icon" href=".png" />-->
-  <!--<link rel="apple-touch-icon-precomposed" href=".png" />-->
-
-  <link rel="stylesheet" type="text/css" href="style-mobile.css"/>
-  <link rel="icon" href="favicon.ico"/>
-</head>
-<body>
-  <canvas id="GameCanvas" oncontextmenu="event.preventDefault()" tabindex="0"></canvas>
-  <img class="canvas_image" style="display: none; z-index: -1; object-fit: contain;" />
-  <div id="splash">
-    <div class="progress-bar stripes">
-      <span style="width: 0%"></span>
-    </div>
-  </div>
-
-<script src="src/settings.js" charset="utf-8"></script>
-<script src="vconsole.min.js"></script>
-<script src="main.js" charset="utf-8"></script>
-<script>
-
-	console.log("XX3");
-	
-
-function testit() {
-	window.u3dTypingGame.log("TestIt is called");
-}
-
-function captureScreen() {
-	let node = new cc.Node();
-	node.parent = cc.director.getScene();
-	node.width = cc.visibleRect.width;
-	node.height =cc.visibleRect.height;
-	node.x = node.width/ 2;
-	node.y = node.height / 2;
-	let camera = node.addComponent(cc.Camera);
-	node.zIndex = 1000000000;
-	camera.cullingMask = 1000000001;
-	let texture = new cc.RenderTexture();
-	let gl = cc.game._renderContext;
-	texture.initWithSize(node.width, node.height, gl.STENCIL_INDEX8);
-	node.parent.scaleY = -1;
-	camera.targetTexture = texture;
-	node.parent.scaleY = 1;
-	let canvas = null;
-	if (!canvas) {
-		canvas = document.createElement('canvas');
-		canvas.width = texture.width;
-		canvas.height = texture.height;
-	}
-	else {
-		let ctx = canvas.getContext('2d');
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-	}
-	let ctx = canvas.getContext('2d');
-	camera.render();
-	let data = texture.readPixels();
-	let width = texture.width;
-	let height = texture.height;
-	let rowBytes = width * 4;
-	for (let row = 0; row < height; row++) {
-		let srow = height - 1 - row;
-		let imageData = ctx.createImageData(width, 1);
-		let start = srow * width * 4;
-		for (let i = 0; i < rowBytes; i++) {
-			imageData.data[i] = data[start + i];
-		}
-		ctx.putImageData(imageData, 0, row);
-	}
-	
-	node.parent = null;
-	node.destroy();
-	return canvas.toDataURL("image/png");
-}
-
-function CanvasToImage() {
-  cc.log("CanvasToImage is called from js 5");
-	var canvasDom = document.querySelector("#GameCanvas");
-var canvasImage = document.querySelector(".canvas_image");
-  /*var newCanvas = document.createElement('canvas');
-  var ctx = newCanvas.getContext('2d');
-
-  var width = canvas.width;
-  var height = canvas.height;
-
-  newCanvas.width = width;
-  newCanvas.height = height;
-
-  ctx.beginPath();
-  ctx.drawImage(canvasDom, 0, 0, width, height);
-
-  var src = newCanvas.toDataURL('image/png');*/
-  var src = captureScreen();
-
-  canvasDom.style.display = 'none';
-
-  canvasImage.style.display = 'block';
-  canvasImage.style.zIndex = 99;
-  canvasImage.src = src;
-
-}
-function CanvasRestore() {
-	var canvasDom = document.querySelector("#GameCanvas");
-var canvasImage = document.querySelector(".canvas_image");
-  canvasImage.style.display = 'none';
-  canvasImage.style.zIndex = -1;
-  canvasImage.src = '';
-
-  canvasDom.style.display = 'block';
-
-}
-</script>
-
-<script type="text/javascript">
-(function () {
-	window.onkeydown=function(e) {
-		console.log("xxx"+e);
-		e.preventDefault();
-	}
-	window.onkeyup=function(e) {
-		console.log("xxx2"+e);
-		e.preventDefault();
-	}
-	document.onkeydown = function(e) {
-  console.log("document catched the keydown event");
-
-};
-    // open web debugger console
-    if (typeof VConsole !== 'undefined') {
-        window.vConsole = new VConsole();
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>测试调用</title>
+    <style>
+	    body, html {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
     }
+    </style>
+  </head>
+  <body>
+    <br><br><br>
+    <button id="btnVibrate1">测试震动1</button><br>
+    <button id="btnVibrate2">测试震动2</button><br>
+    <button id="btnVibrate3">测试震动3</button><br>
+    <button id="btnSuccess">测试通关</button><br>
+    <button id="btnNextNode">测试下一个节点</button>
+    <button id="btnMenu">测试选关</button>
+    <button id="btnPause">测试暂停</button>
+    <button id="btnKeyDown">测试按键</button>
+    <button id="btnRetry">测试重试</button>
+    <button id="btnFailed">测试失败</button>
+    <button id="btnTTT">测试测试</button>
+    <button id="btnTTT2">测试测试2</button>
+    <script>
+	  setTimeout(()=>{
+		window.u3dTypingGame.onEnter();
+		var gameData = window.u3dTypingGame.getGameData();
+		u3dlog("config title="+gameData.config.customField.title);
+		u3dlog(JSON.stringify(window.u3dTypingGame.getGameData()));
+	  }, 1000);
+	  
+	  function testparam(num) {
+		  if (typeof(num) != 'undefined') {
+			console.log("XXX");
+		  }
+		  else {
+			console.log("YYY");
+			num = 2;
+		  }
+		  console.log("num"+num);
+		  console.log("num json=>"+JSON.stringify(num));
+	  }
+	  
+      const btn = document.querySelector('#btnVibrate1');
+      btn.addEventListener('click', () => {
+	      testparam();
+		  testparam(1);
+		  u3dlog("vibrate 1");
+		  window.u3dTypingGame.vibrate(0);
+      });
+	  
+	  const btn2 = document.querySelector('#btnVibrate2');
+      btn2.addEventListener('click', () => {
+        u3dlog("vibrate 2");
+		window.u3dTypingGame.vibrate(1);
+      });
+	  
+	  const btn2a = document.querySelector('#btnVibrate3');
+      btn2a.addEventListener('click', () => {
+        u3dlog("vibrate 2");
+		window.u3dTypingGame.vibrate();
+      });
 
-    var debug = window._CCSettings.debug;
-    var splash = document.getElementById('splash');
-    splash.style.display = 'block';
-
-    function loadScript (moduleName, cb) {
-      function scriptLoaded () {
-          document.body.removeChild(domScript);
-          domScript.removeEventListener('load', scriptLoaded, false);
-          cb && cb();
-      };
-      var domScript = document.createElement('script');
-      domScript.async = true;
-      domScript.src = moduleName;
-      domScript.addEventListener('load', scriptLoaded, false);
-      document.body.appendChild(domScript);
-    }
-
-    loadScript(debug ? 'cocos2d-js.js' : 'cocos2d-js-min.js', function () {
-      if (CC_PHYSICS_BUILTIN || CC_PHYSICS_CANNON) {
-        loadScript(debug ? 'physics.js' : 'physics-min.js', window.boot);
-      }
-      else {
-        window.boot();
-      }
-    });
-})();
-</script>
-</body>
+	    const btn2c = document.querySelector('#btnTTT');
+      btn2c.addEventListener('click', () => {
+        for (var i = 0; i < 400; ++i) {
+        	//u3dlog("vibrate " + i);
+		window.u3dTypingGame.onKeyDown("abcdefg", "c", false);
+	}
+      });
+	  
+	  const btn3 = document.querySelector('#btnSuccess');
+      btn3.addEventListener('click', () => {
+        u3dlog("success");
+		window.u3dTypingGame.onSucceeded({
+		    isEnd: true,
+			isSuccess: true,
+			retryTimes: 0,
+			stars: 3,
+			lives: 1,
+			correctItemCount: 5,
+			correctLetterCount: 5,
+			correctRate: 100,
+			roundDuration: 30,
+			gameDuration: 100,
+			speed: 30,
+			letterErrors: {
+			    "a": 1,
+				"e": 2
+			},
+			wordErrors: {
+			    "abc": 1,
+				"eeffa": 2
+			}
+		});
+      });
+	  
+	  const btn4 = document.querySelector('#btnNextNode');
+      btn4.addEventListener('click', () => {
+        window.u3dTypingGame.goToNextNode();
+      });
+	  
+	  const btn6 = document.querySelector('#btnMenu');
+      btn6.addEventListener('click', () => {
+        u3dlog("btnMenu");
+		window.u3dTypingGame.onClickSelectLevelButton();
+      });
+	  
+	  const btn7 = document.querySelector('#btnPause');
+      btn7.addEventListener('click', () => {
+        u3dlog("btnPause");
+		window.ccTypingGame.pause();
+      });
+	  
+	  const btn8 = document.querySelector('#btnKeyDown');
+      btn8.addEventListener('click', () => {
+        u3dlog("btnKeyDown");
+		window.u3dTypingGame.onKeyDown("abcdefg", "c", false);
+      });
+	  
+	  const btn9 = document.querySelector('#btnRetry');
+      btn9.addEventListener('click', () => {
+        u3dlog("btnRetry");
+		window.u3dTypingGame.onRetry();
+      });
+	  
+	  const btn10 = document.querySelector('#btnFailed');
+      btn10.addEventListener('click', () => {
+        u3dlog("btnFailed");
+		window.u3dTypingGame.onFailed();
+      });
+	  
+	  window.ccTypingGame = {};
+	  window.ccTypingGame.pause = function() {
+			u3dlog("pause in js");
+			window.u3dTypingGame.onPause({
+				correctItemCount: 0
+			});
+	  };
+	  window.ccTypingGame.resume = function() {
+			u3dlog("resume in js");
+	  };
+	  window.ccTypingGame.exit = function() {
+			u3dlog("exit in js");
+			window.u3dTypingGame.onExit();
+	  };
+    </script>
+  </body>
 </html>
