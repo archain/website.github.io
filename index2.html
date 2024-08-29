@@ -108,6 +108,45 @@ function captureScreen() {
 	return canvas.toDataURL("image/png");
 }
 
+public getImgBase64() {
+	const target = cc.Canvas.instance.node.getComponent(cc.Canvas);
+	const width = 1280;
+	const height = 720;
+	const renderTexture = new cc.RenderTexture(width, height);
+	renderTexture.begin();
+	target.node._sgNode.visit();
+	renderTexture.end();
+	//
+	const canvas = document.createElement("canvas");
+	const ctx = canvas.getContext("2d");
+	canvas.width = width;
+	canvas.height = height;
+	if (cc._renderType === cc.game.RENDER_TYPE_CANVAS) {
+		const texture = renderTexture.getSprite().getTexture();
+		const image = texture.getHtmlElementObj();
+		ctx.drawImage(image, 0, 0);
+	} else if (cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
+		const buffer = gl.createFramebuffer();
+		gl.bindFramebuffer(gl.FRAMEBUFFER, buffer);
+		const texture = renderTexture.getSprite().getTexture()._glID;
+		gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
+		const data = new Uint8Array(width * height * 4);
+		gl.readPixels(0, 0, width, height, gl.RGBA, gl.UNSIGNED_BYTE, data);
+		gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+		const rowBytes = width * 4;
+		for (let row = 0; row < height; row++) {
+			const srow = height - 1 - row;
+			const data2 = new Uint8ClampedArray(data.buffer, srow * width * 4, rowBytes);
+			const imageData = new ImageData(data2, width, 1);
+			ctx.putImageData(imageData, 0, row);
+		}
+	}
+  const url =  canvas.toDataURL("image/png");
+  cc.log("url", url);
+
+  return url;
+}
+
 function CanvasToImage() {
   cc.log("CanvasToImage is called from js 5");
 	var canvasDom = document.querySelector("#GameCanvas");
@@ -125,7 +164,8 @@ var canvasImage = document.querySelector(".canvas_image");
   ctx.drawImage(canvasDom, 0, 0, width, height);
 
   var src = newCanvas.toDataURL('image/png');*/
-  var src = captureScreen();
+  //var src = captureScreen();
+  var src = getImgBase64();
 
   canvasDom.style.display = 'none';
 
