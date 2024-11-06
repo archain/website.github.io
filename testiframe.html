@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试</title>
+</head>
+<style>
+    iframe {
+	    border: none;
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		scrolling: "no";
+	}
+</style>
+<body>
+  <iframe id="innerFrame" src="http://127.0.0.1/testtarget.html">
+   </iframe>
+   
+   <script>
+	  console.log("BBBBBBB");
+	  localMortonH5={};
+	localMortonH5.userId=-1;
+	localMortonH5.classId=-1;
+	localMortonH5.subjectId=0;
+	localMortonH5.unitId=-1;
+	localMortonH5.nodeId=-1;
+	localMortonH5.close=function(isManual, isPageLoaded) {
+		var args = {
+			isManual: isManual,
+			isPageLoaded: isPageLoaded
+		};
+		__H5ElementClose(args);
+	};
+	var innerFrame = document.getElementById("innerFrame");
+	console.log("xx=>"+innerFrame+",window="+innerFrame.contentWindow);
+	innerFrame.contentWindow.mortonH5=localMortonH5;
+	</script>
+</body>
+</html>
