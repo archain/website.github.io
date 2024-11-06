@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>调起自测</title>
+  </head>
+  <body>
+    <button id="btn">按钮关闭</button></br>
+    <button id="btn2">完成按钮</button>
+    <script>
+	  window.onload = function() {
+	      //window.mortonH5.close(true,true);
+	      /*if (window.mortonH5) {
+		      alert("对象注册成功");
+		  }
+		  else {
+		      alert("对象未注入");
+		  }*/
+	  }
+      const btn = document.querySelector('#btn');
+      btn.addEventListener('click', () => {
+        window.mortonH5.close(true,true);
+      });
+	  const btn2 = document.querySelector('#btn2');
+      btn2.addEventListener('click', () => {
+        window.mortonH5.close(false,true);
+      });
+    </script>
+  </body>
+</html>
