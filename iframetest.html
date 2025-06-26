@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <style>
+    html, body {
+      margin: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+    iframe {
+      width: 100vw;
+      height: 100vh;
+      border: none;
+    }
+    img {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      width: 53px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <iframe id="iframe"></iframe>
+  <img src="https://cdn.math-thinking.pipacoding.com/u3d/Html/close.png" />
+      <script src="https://walnut3d.hetao101.com/u3d/test/py/vconsole.min.js"></script>
+	<script>
+    new VConsole();
+  </script>
+  <script>
+
+    window.mortonH5 = {
+      close: (isManuallyClosed, isPageLoaded) => window.CloseIframe && window.CloseIframe(isManuallyClosed, isPageLoaded)
+    }
+
+    const iframe = document.querySelector('iframe');
+    const close = document.querySelector('img');
+
+    close.onclick = function() {
+      mortonH5.close(true, true);
+    }
+
+    function getUrlParams(url) {
+      const params = {};
+      const regex = /[?&]([^=#]+)=([^&#]*)/g;
+      let match;
+
+      while (match = regex.exec(url)) {
+          params[decodeURIComponent(match[1])] = decodeURIComponent(match[2]);
+      }
+
+      return params;
+    }
+	  
+		window.U3dSendMessageToIframe = function(key,value) {
+			iframe.contentWindow.IframeSendMessageToJs(key,value);
+		}
+
+    window.SetIframeUrl = (url) => {
+      iframe.src = url;
+      const params = getUrlParams(url);
+      console.log('params', params);
+      window.mortonH5 = {
+        ...window.mortonH5,
+        ...params
+      };
+      iframe.onload = function() {	
+        //iframe.contentWindow.inject(window.mortonH5);
+		iframe.contentWindow.JsSendMessageToIframe = function(key,value) {
+			window.IframeSendMessageToU3d(key,value);
+		}
+		
+		iframe.contentWindow.IframeSendMessageToJs = function(key,value) {
+			if (key == "commitAudioData") {
+				const decodedString = atob(value);
+				const jsonObject = JSON.parse(decodedString);
+				
+				console.log("volume from u3d="+jsonObject.volume);
+			}
+		}
+		
+        window.OnIframeLoad();
+      }
+    }
+  </script>
+</body>
+</html>
