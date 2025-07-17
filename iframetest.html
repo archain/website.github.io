@@ -10,6 +10,10 @@
       width: 100vw;
       height: 100vh;
       overflow: hidden;
+      position: fixed;
+      z-index: 99;
+      left: 0;
+      top: 0;
     }
     iframe {
       width: 100vw;
@@ -22,16 +26,13 @@
       top: 20px;
       width: 53px;
       cursor: pointer;
+      z-index: 999;
     }
   </style>
 </head>
 <body>
   <iframe id="iframe"></iframe>
-  <img src="https://cdn.math-thinking.pipacoding.com/u3d/Html/close.png" />
-      <script src="https://walnut3d.hetao101.com/u3d/test/py/vconsole.min.js"></script>
-	<script>
-    new VConsole();
-  </script>
+  <img id="close" src="https://cdn.math-thinking.pipacoding.com/u3d/Html/close.png" />
   <script>
 
     window.mortonH5 = {
@@ -56,37 +57,44 @@
 
       return params;
     }
-	  
-		window.U3dSendMessageToIframe = function(key,value) {
-			iframe.contentWindow.IframeSendMessageToJs(key,value);
-		}
+
+    window.ShowClose = function() {
+      close.style.display = 'block';
+    } 
+
+    window.HideClose = function() {
+      close.style.display = 'none';
+    }
 
     window.SetIframeUrl = (url) => {
       iframe.src = url;
+	    console.log("SetIframeUrl url="+url);
       const params = getUrlParams(url);
       console.log('params', params);
       window.mortonH5 = {
         ...window.mortonH5,
         ...params
       };
-      iframe.onload = function() {	
-        //iframe.contentWindow.inject(window.mortonH5);
-		iframe.contentWindow.JsSendMessageToIframe = function(key,value) {
-			window.IframeSendMessageToU3d(key,value);
-		}
-		
-		iframe.contentWindow.IframeSendMessageToJs = function(key,value) {
-			if (key == "commitAudioData") {
-				const decodedString = atob(value);
-				const jsonObject = JSON.parse(decodedString);
-				
-				console.log("volume from u3d="+jsonObject.volume);
-			}
-		}
-		
-        window.OnIframeLoad();
+      iframe.onload = function() {
+	    console.log("onload 1");
+        iframe.contentWindow.inject(window.mortonH5);
+	    console.log("onload 2");
+        window.OnIframeLoad && window.OnIframeLoad();
+	    console.log("onload 3");
+        // 音视频交互接口
+        // h5发送消息给iframe
+        iframe.contentWindow.JsSendMessageToIframe = function(cmd, data) {
+          // iframe转发数据到u3d
+          window.IframeSendMessageToU3d(cmd, data)
+        }
+        // u3d 发送消息到iframe 
+        window.U3dSendMessageToIframe = function(cmd, data) {
+		  console.log("U3dSendMessageToIframe" + cmd + ", data="+data);
+          // iframe转发数据到h5
+          iframe.contentWindow.IframeSendMessageToJs(cmd, data);
+        }
       }
     }
   </script>
 </body>
-</html>
+</html> 
