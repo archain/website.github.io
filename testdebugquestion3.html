@@ -17,6 +17,7 @@
     <button id="btnCommitAnswer">测试提交数据</button>
     <button id="btnTrackEvent">测试埋点</button>
     <button id="btnExit">测试返回按钮</button>
+	<button id="btnMultiple">测试多条一起</button>
 	<script src="https://walnut3d.hetao101.com/u3d/test/py/vconsole.min.js"></script>
     <script>
 	new VConsole();
@@ -28,7 +29,9 @@
 		
 	  function setMortonData(str) {
 		const decodedString = atob(str);
-		console.log(str + ", " + JSON.stringify(JSON.parse(decodedString)));
+		const jsonObject = JSON.parse(decodedString);
+		console.log(str + ", " + JSON.stringify(jsonObject));
+		console.log("questionItem" + JSON.stringify(jsonObject.config.questionItem));
 	  }
 	  
       const btn = document.querySelector('#btnComplete');
@@ -96,6 +99,41 @@
 		  var jsonString = JSON.stringify(eventData);
 		  var base64 = btoa(unescape(encodeURIComponent(jsonString)));
 		  window.SendMessageToU3d("trackEvent",base64);
+      });
+	  
+	  const btn7 = document.querySelector('#btnMultiple');
+      btn7.addEventListener('click', () => {
+	      var eventData = {
+			"eventType":"learning_codeSimulation_assist_click",
+			"eventArgs": {
+				"tipType":"word"
+			}
+		  };
+		  var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(eventData))));
+		  window.SendMessageToU3d("trackEvent",base64);
+		  
+		  var answer = {
+			"type":"DEBUG",
+			"debugConfigMd5":"123344",
+			"data":[{
+				"rewardType":"coin",
+				"rewardNum":50,
+				"rewardTotalNum":100,
+				"totalQuestionNum":10,
+				"rightQuestionNum":5,
+				"debugSteps":[{
+					"index":0,
+					"errorCount":3,
+					"isRight":1
+				},{
+					"index":1,
+					"errorCount":0,
+					"isRight":2
+				}]
+			}]};
+		  
+		  var base641 = btoa(unescape(encodeURIComponent(JSON.stringify(answer))));
+		  window.SendMessageToU3d("commitAnswer",base641);
       });
     </script>
   </body>
