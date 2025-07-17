@@ -14,9 +14,26 @@
     <button id="btnStopRecordAudio">结束录音</button><br>
     <button id="btnStartRecordVideo">开始录制视频</button><br>
     <button id="btnStopRecordVideo">结束录制视频</button><br>
+	<img id="image" width=800 height=600 />
 	<script src="https://walnut3d.hetao101.com/u3d/test/py/vconsole.min.js"></script>
     <script>
 	new VConsole();
+	
+	function inject(mortonH5) {
+		console.log("inject is called");
+	}
+	
+	const image = document.querySelector('#image');
+	function IframeSendMessageToJs(cmd, data) {
+		if (cmd == "commitVideoData") {
+			image.src = "data:image/png;base64," + data;
+		}
+		else {
+			const decodedString = atob(data);
+			const jsonObject = JSON.parse(decodedString);
+			console.log(data + ", " + JSON.stringify(jsonObject));
+		}
+	}
 	
       const btn = document.querySelector('#btnStartRecordAudio');
       btn.addEventListener('click', () => {
